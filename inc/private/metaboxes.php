@@ -50,12 +50,19 @@
 	        $direccion = (isset($_POST['direccion'])) ? $_POST['direccion'] : '';
 	        $correo_electronico = (isset($_POST['correo_electronico'])) ? $_POST['correo_electronico'] : '';
 			$telefono = (isset($_POST['telefono'])) ? $_POST['telefono'] : '';
+			$pagina_web = (isset($_POST['pagina_web'])) ? $_POST['pagina_web'] : '';
+			$google_maps = (isset($_POST['google_maps'])) ? $_POST['google_maps'] : '';
+
 			$logo_id = (isset($_POST['logo_taller_id'])) ? $_POST['logo_taller_id'] : '';
 			$logo = (isset($_POST['logo_taller'])) ? $_POST['logo_taller'] : '';
 
 	    	update_post_meta($post_id,'contact_name',$contact_name);
 	    	update_post_meta($post_id,'direccion',$direccion);
 	    	update_post_meta($post_id,'correo_electronico',$correo_electronico);
+	    	update_post_meta($post_id,'telefono',$telefono);
+	    	update_post_meta($post_id,'pagina_web',$pagina_web);
+	    	update_post_meta($post_id,'google_maps',$google_maps);
+
 	    	update_post_meta($post_id,'logo_taller',$logo);
 	    	update_post_meta($post_id,'logo_taller_id',$logo_id);
 

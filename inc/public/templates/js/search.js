@@ -18,27 +18,46 @@ function searchPosts() {
 
 		$(this).html('Buscando...').attr('disabled', 'disabled');
 
-		$('.imp-searcher .required').each(function() {
-			if($(this).val() === null || $(this).val() == '0' || $(this).val().length < 1) {
+		if($('#servicios').val().length < 1 && $('#ciudad').val() == '0') {
 
-				errorNames.push($(this).attr('id'));
+			$('.col-error #text').html(`Debes seleccionar al menos un <span class="names">servicio</span> o una <span class="names">Ciudad</span>`);
 
-				if(errorNames.length > 1) {
-					$('.col-error #text').html(`Los campos: <span id="names">${errorNames.join(', ')}</span> no pueden estar vacíos`);
-				} else {
-					$('.col-error #text').html(`El campo: <span id="names">${errorNames.join(', ')}</span> no puede estar vacío`);
-				}
+			$('.col-error').css('display', 'block');
+			$('#btn-search').html('Buscar').removeAttr('disabled');
+			flag = false;
 
-				$('.col-error').css('display', 'block');
-				$('#btn-search').html('Buscar').removeAttr('disabled');
-				flag = false;
+		}
 
+		$('#servicios').on('change', function() {
+			if($('#servicios').val().length > 0) {
+				$('.col-error').css('display', 'none');
+			}
+		});
+
+		$('#ciudad').on('change', function() {
+			if($('#ciudad').val() !== 0) {
+				$('.col-error').css('display', 'none');
 			}
 		});
 
 		if(flag) {
-			console.log($('#servicios').val());
-			console.log($('#ciudad').val());
+
+			let searching = '<div class="imp-loader"><p>Buscando talleres...</p></div>';
+
+			$('.talleres-loop').html(searching);
+
+			//imp_vars
+			$.ajax({
+				method: 'POST',
+				url: imp_vars.ajaxurl,
+				data: {"action": "imp_search_results", "ciudad": $('#ciudad').val(), "servicios": $('#servicios').val()},
+				success: function(response) {
+					setTimeout(function() {
+						$('.talleres-loop').html(response);
+						$('#btn-search').html('Buscar').removeAttr('disabled');
+					}, 1000);
+				}
+			});
 		}
 
 	});

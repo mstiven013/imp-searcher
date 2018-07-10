@@ -35,7 +35,7 @@ body.imp_searcher #primary .entry-content {
 			font-size: 14px;
 			margin: 0px;
 		}
-		.col-error #names {
+		.col-error .names {
 			font-weight: bold;
 			text-transform: capitalize;
 		}
@@ -67,6 +67,23 @@ body.imp_searcher #primary .entry-content {
 	    	color: #002961;
 	    }
 
+.imp-loader {
+	background-color: #f7f7f7;
+	border-radius: 10px;
+	margin-top: 20px;
+	padding: 30px;
+	text-align: center;
+}
+	.imp-loader p {
+		color: #002b5c;
+	    font-weight: 800;
+	    font-size: 18pt;
+	    line-height: normal;
+	    margin: 0px;
+	    text-align: center;
+	    width: 100%;
+	}
+
 /*Post loop*/
 .talleres-loop .taller {
 	border-top: 1px solid #002961;
@@ -85,6 +102,20 @@ body.imp_searcher #primary .entry-content {
 	max-width: 100%;
 	width: 100%;
 }
+
+.taller iframe {
+	height: auto;
+	width: 100%;
+}
+
+.taller .web-site {
+	margin-top: 20px;
+	text-align: center;
+	width: 100%;
+}
+	.taller .web-site a {
+		color: #002b5c;
+	}
 
 /*Services loop*/
 .services-loop {
@@ -107,7 +138,16 @@ body.imp_searcher #primary .entry-content {
 		    color: #686868;
 		    font-weight: 100;
 		    line-height: 100%;
+		    margin-bottom: 10px;
 		    text-align: center;
+		}
+		.services_title {
+			color: #002b5c;
+		    font-weight: 800;
+		    font-size: 18pt;
+		    line-height: normal;
+		    text-align: left;
+		    width: 100%;
 		}
 
 /*Select2 styles*/

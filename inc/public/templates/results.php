@@ -18,6 +18,8 @@
 			$direction = get_post_meta( get_the_ID(), 'direccion', true );
 			$email = get_post_meta( get_the_ID(), 'correo_electronico', true );
 			$phone = get_post_meta( get_the_ID(), 'telefono', true );
+			$webPage = get_post_meta( get_the_ID(), 'pagina_web', true );
+			$googleMaps = get_post_meta( get_the_ID(), 'google_maps', true );
 
 			//Get cities
 			$citieTaller = get_the_terms( get_the_ID(), 'ciudades' );
@@ -84,16 +86,19 @@
 				<?php if(!empty($phone)) { ?>
 					<p><b>Teléfono:</b> <?php echo $phone; ?></p>
 				<?php } ?>
-
-				<p><a href="<?php the_permalink(); ?>">Leer más acerca de este taller</a></p>
 			</div>
 
 			<!--Map "Taller" column-->
 			<div class="col-12 col-sm-12 col-md-3">
-				ifram del mapa
+				<?php 
+					if($googleMaps) {
+						echo $googleMaps;
+					}
+				?>
 			</div>
 			
 			<?php if($servicesTaller) {  ?>
+				<p class="services_title"><?php _e(' LOS SERVICIOS QUE OFRECEMOS'); ?></p>
 				<div class="services-loop">
 					<?php foreach($servicesTaller as $service) {
 						$t_ID = $service->term_taxonomy_id; 
@@ -113,6 +118,10 @@
 				</div>
 			<?php } ?>
 
+			<?php if ($webPage): ?>
+				<p class="web-site"><b><?php _e('Página web:'); ?></b> <a href="<?php echo $webPage; ?>" target="_blank"><?php echo $webPage; ?></a></p>
+			<?php endif ?>
+
 		</div>
 	<?php endwhile; ?>
 
@@ -120,6 +129,6 @@
 	
 <?php else : ?>
 
-	<p>No existen talleres</p>
+	<div class="imp-loader"><p>Lo sentimos, en estos momentos no hay talleres disponibles.</p></div>
 	
 <?php endif; ?>

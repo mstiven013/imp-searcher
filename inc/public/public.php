@@ -68,6 +68,13 @@
 			    //Searcher
 			    wp_register_script('search.js', IMPS_TEMP . '/js/search.js', '', '', false);
 			    wp_enqueue_script('search.js');
+
+			    wp_localize_script('search.js', 'imp_vars', array(
+				    'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				    'public' => IMPS_DIR . 'inc/public/',
+				    'private' => IMPS_DIR . 'inc/private/',
+				    'query_vars' => json_encode( $wp_query->query )
+				));
 			}
 		    
 		}
@@ -95,6 +102,48 @@
 			}
 		    
 		}
+	}
+
+	add_action( 'wp_ajax_nopriv_imp_search_results', 'imp_search_results' );
+	add_action( 'wp_ajax_imp_search_results', 'imp_search_results' );
+
+	function imp_search_results() {
+		$ciudad = $_POST['ciudad'];
+		$servicios = $_POST['servicios'];
+
+		if(count($servicios) > 0) {
+			$tax_services = array(
+	        	'taxonomy' => 'servicios',
+		        'field' => 'slug',
+		        'terms' => $servicios,
+		        'operator' => 'AND'
+	        );
+		} else {
+			$tax_services = '';
+		}
+
+		if($ciudad !== '0') {
+			$tax_city = array(
+	        	'taxonomy' => 'ciudades',
+		        'field' => 'slug',
+		        'terms' => $ciudad,
+		        'operator' => 'IN'
+	        );
+		} else {
+			$tax_city = '';
+		}
+
+		$args_query = array(
+			'post_type' => 'talleres',
+			'numberposts' => 100,
+			'tax_query' => array(
+				'relation' => 'AND',
+				$tax_services,
+				$tax_city
+		    )
+		);
+
+		require_once 'controllers/ajax-reload-posts.php';
 	}
 
  ?>
