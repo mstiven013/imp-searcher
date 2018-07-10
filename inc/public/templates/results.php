@@ -21,11 +21,12 @@
 
 			//Get cities
 			$citieTaller = get_the_terms( get_the_ID(), 'ciudades' );
-			$space = '';
+			$servicesTaller = get_the_terms( get_the_ID(), 'servicios' );
+			$spaceC = '';
 			$item = 0;
 			
 			if(count($citieTaller) > 1) {
-				$space = ', ';
+				$spaceC = ', ';
 			}
 			
 		 ?>
@@ -69,7 +70,7 @@
 							if(++$item === count($citieTaller)) {
 								echo $city->name, '.';
 							} else {
-								echo $city->name . $space;
+								echo $city->name . $spaceC;
 							}
 						} ?>
 					</p>
@@ -91,6 +92,26 @@
 			<div class="col-12 col-sm-12 col-md-3">
 				ifram del mapa
 			</div>
+			
+			<?php if($servicesTaller) {  ?>
+				<div class="services-loop">
+					<?php foreach($servicesTaller as $service) {
+						$t_ID = $service->term_taxonomy_id; 
+						$term_data = get_option("taxonomy_$t_ID"); ?>
+						<div class="item-service">
+							<div class="img_service_wrapper">
+								<?php if($term_data['service_image'] && $term_data['service_image'] !== '') { ?>
+									<img class="img_service" src="<?php echo $term_data['service_image']; ?>" alt="">
+								<?php } else { ?>
+									<img class="img_service" src="<?php echo IMPS_TEMP; ?>/img/no-image.jpg" alt="">
+								<?php } ?>
+							</div>
+
+							<p class="service_name"><?php echo $service->name; ?></p>
+						</div>
+					<?php } ?>
+				</div>
+			<?php } ?>
 
 		</div>
 	<?php endwhile; ?>

@@ -8,7 +8,7 @@
 	function imp_admin_styles($hook_suffix) {
 		global $pagenow;
 
-	    if($pagenow === 'post.php' && 'talleres' === get_post_type( $_GET['post'])) {
+	    if(($pagenow === 'post.php' && 'talleres' === get_post_type( $_GET['post'])) || ($pagenow === 'term.php' && 'servicios' === $_GET['taxonomy'])) {
 		    //styles
 		    wp_register_style('style.css', IMPS_DIR . 'inc/private/templates/css/style.css', array(), false, 'all');
 		    wp_enqueue_style('style.css');
